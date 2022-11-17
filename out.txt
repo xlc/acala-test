@@ -1,0 +1,1 @@
+--release --color=never --bin=acala --features=runtime-benchmarks --features=with-mandala-runtime -- benchmark pallet --chain=dev --steps=50 --repeat=20 --pallet=module_currencies --extrinsic=* --execution=wasm --wasm-execution=compiled --heap-pages=4096 --output=./modules/currencies/src/weights.rs --template=./templates/module-weight-template.hbs
