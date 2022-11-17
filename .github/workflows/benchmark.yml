@@ -6,7 +6,7 @@ on:
 jobs:
   benchmark:
     name: Benchmark
-    if: ${{ github.event.issue.pull_request && contains(fromJson('["MEMBER", "OWNER"]'), github.event.comment.author_association)&& contains(github.event.comment.body, '/benchmark') }}
+    if: ${{ github.event.issue.pull_request && contains(fromJson('["MEMBER", "OWNER"]'), github.event.comment.author_association)&& startsWith(github.event.comment.body, '/bench ') }}
     runs-on: ubuntu-latest
     steps:
       # - uses: actions/checkout@v3
