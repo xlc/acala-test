@@ -20,6 +20,7 @@ jobs:
       #     components: rustfmt
       #     target: wasm32-unknown-unknown
       #     default: true
+
       - uses: actions/github-script@v6
         with:
           script: |
