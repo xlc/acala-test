@@ -28,6 +28,10 @@ jobs:
               ref: data.data.head.ref,
               sha: data.data.head.sha,
             }
+      - name: echo
+        run: |
+          echo ${{ steps.issue.outputs.result.ref }}
+          echo ${{ steps.issue.outputs.result.sha }}
       - uses: actions/checkout@v3
         with:
           submodules: recursive
