@@ -2,7 +2,9 @@ name: Benchmark
 on:
   issue_comment:
     types: [created]
-
+permissions:
+  pull-requests: write
+  repository-projects: write
 jobs:
   benchmark:
     name: Benchmark
@@ -67,18 +69,20 @@ jobs:
               `
             })
             return data.data.id
-      - name: Install toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: nightly-2022-08-05
-          components: rustfmt
-          target: wasm32-unknown-unknown
-          default: true
-      - name: Setup cmake
-        uses: jwlawson/actions-setup-cmake@v1.12
+      # - name: Install toolchain
+      #   uses: actions-rs/toolchain@v1
+      #   with:
+      #     profile: minimal
+      #     toolchain: nightly-2022-08-05
+      #     components: rustfmt
+      #     target: wasm32-unknown-unknown
+      #     default: true
+      # - name: Setup cmake
+      #   uses: jwlawson/actions-setup-cmake@v1.12
       - name: Run benchmarks
-        run: ${{steps.command.outputs.result}} > ${{runner.temp}}/out.txt
+        run: |
+          echo ${{steps.command.outputs.result}} > ${{runner.temp}}/out.txt
+          echo 1 >> test.txt
       - name: Commit
         run: |
           git config user.email "hello@acala.network"
