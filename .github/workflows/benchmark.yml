@@ -3,7 +3,7 @@ on:
   issue_comment:
     types: [created]
 permissions:
-  pull-requests: write
+  # pull-requests: write
   contents: write
 jobs:
   benchmark:
@@ -24,6 +24,7 @@ jobs:
               repo: context.repo.repo,
               pull_number: pr
             })
+            console.log(data.data)
             return data.data.head.ref
       - uses: actions/checkout@v3
         with:
