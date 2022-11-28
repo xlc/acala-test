@@ -23,7 +23,6 @@ jobs:
               repo: context.repo.repo,
               pull_number: pr
             })
-            console.log(data.data)
             return {
               ref: data.data.head.ref,
               sha: data.data.head.sha,
@@ -91,7 +90,7 @@ jobs:
         run: |
           git config user.email "hello@acala.network"
           git config user.name "Acala Github Action Bot"
-          git pull --ff-only
+          git pull origin master --ff-only
           git add .
           git commit -m '${{github.event.comment.body}}' --allow-empty
           git push origin HEAD:${{ fromJson(steps.issue.outputs.result).ref }}
