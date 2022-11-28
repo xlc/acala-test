@@ -5,6 +5,7 @@ on:
 permissions:
   pull-requests: write
   repository-projects: write
+  contents: write
 jobs:
   benchmark:
     name: Benchmark
