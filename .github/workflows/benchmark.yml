@@ -30,8 +30,7 @@ jobs:
             }
       - name: echo
         run: |
-          echo ${{ steps.issue.outputs.result.ref }}
-          echo ${{ steps.issue.outputs.result.sha }}
+          echo ${{ steps.issue.outputs.result }}
       - uses: actions/checkout@v3
         with:
           submodules: recursive
