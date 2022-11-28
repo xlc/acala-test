@@ -28,13 +28,10 @@ jobs:
               ref: data.data.head.ref,
               sha: data.data.head.sha,
             }
-      - name: echo
-        run: |
-          echo ${{ steps.issue.outputs.result }}
       - uses: actions/checkout@v3
         with:
           submodules: recursive
-          ref: ${{ steps.issue.outputs.result.sha }}
+          ref: ${{ fromJson(steps.issue.outputs.result).sha }}
       - uses: actions/github-script@v6
         name: Prepare command
         id: command
@@ -97,7 +94,7 @@ jobs:
           git pull --ff-only
           git add .
           git commit -m '${{github.event.comment.body}}' --allow-empty
-          git push origin HEAD:${{ steps.issue.outputs.result.ref }}
+          git push origin HEAD:${{ fromJson(steps.issue.outputs.result).ref }}
       - uses: actions/github-script@v6
         name: Update comment
         with:
