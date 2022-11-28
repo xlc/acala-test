@@ -3,7 +3,7 @@ on:
   issue_comment:
     types: [created]
 permissions:
-  # pull-requests: write
+  pull-requests: write
   contents: write
 jobs:
   benchmark:
@@ -16,7 +16,6 @@ jobs:
         name: Get PR branch
         id: issue
         with:
-          result-encoding: string
           script: |
             const pr = context.payload.issue.number
             const data = await github.rest.pulls.get({
@@ -25,11 +24,14 @@ jobs:
               pull_number: pr
             })
             console.log(data.data)
-            return data.data.head.ref
+            return {
+              ref: data.data.head.ref,
+              sha: data.data.head.sha,
+            }
       - uses: actions/checkout@v3
         with:
           submodules: recursive
-          ref: ${{ steps.issue.outputs.result }}
+          ref: ${{ steps.issue.outputs.result.sha }}
       - uses: actions/github-script@v6
         name: Prepare command
         id: command
@@ -89,9 +91,10 @@ jobs:
         run: |
           git config user.email "hello@acala.network"
           git config user.name "Acala Github Action Bot"
+          git pull --ff-only
           git add .
           git commit -m '${{github.event.comment.body}}' --allow-empty
-          git push
+          git push origin HEAD:${{ steps.issue.outputs.result.ref }}
       - uses: actions/github-script@v6
         name: Update comment
         with:
